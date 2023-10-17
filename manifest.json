@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Web Speech API Demo",
+    "version": "1.0",
+    "description": "A demo of the Web Speech API in a Chrome extension",
+    "permissions": [
+        "storage"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/icon16.png",
+            "48": "images/icon48.png",
+            "128": "images/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    }
+}

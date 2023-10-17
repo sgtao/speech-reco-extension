@@ -1,0 +1,49 @@
+body {
+  margin: 0 auto;
+  padding: 0;
+  height: 100vh;
+  font: 13px/18px "Open Sans", arial, sans-serif;
+}
+
+.container {
+  width: 90%;
+  height: 100%;
+  display: block;
+  position: relative;
+}
+.container header {
+  text-align: center;
+}
+.container main {
+  height: 80%;
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;
+  max-height: 320px;
+  display: block;
+}
+.container main div span {
+  margin: 2rem;
+  padding-top: 48px;
+}
+.container main #div_start {
+  top: 0;
+  right: 0;
+  float: right;
+}
+#start_button {
+  border-radius: 1em;
+  color: gray;
+}
+#start_button :hover {
+  cursor: pointer;
+}
+.container #results {
+  top: 0;
+  height: 80%;
+  border: 1px solid;
+  border-radius: 1em;
+}
+.container > footer {
+  text-align: center;
+}
