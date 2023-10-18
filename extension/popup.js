@@ -7,10 +7,12 @@ var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEv
 var recognition = new SpeechRecognition();
 var recognizing = false;
 var start_timestamp = 0;
+var transcript = ''; // 音声認識文章
 
-const start_button = document.querySelector('#start_button');
+const startButton = document.querySelector('#start_button');
 const info = document.querySelector('#info_message');
 const showText = document.querySelector('#interim_span');
+const copyButton = document.querySelector('#copy_results .copy_button');
 
 function showInfo(s) {
     if (s) {
@@ -20,12 +22,12 @@ function showInfo(s) {
     }
 }
 
-function startButton(event) {
+function startRecognize(event) {
     if (recognizing) {
         recognition.stop();
         recognizing = false;
         showInfo('Stop recognition');
-        start_button.style.color = 'gray';
+        startButton.style.color = 'gray';
         return;
     }
     final_transcript = '';
@@ -36,20 +38,31 @@ function startButton(event) {
     final_span.innerHTML = '';
     interim_span.innerHTML = '';
     start_timestamp = event.timeStamp;
-    start_button.style.color = 'red';
+    startButton.style.color = 'red';
     showInfo('Ready to receive talk.');
     console.info(`Ready to receive talk by Language ${recognition.lang}`);
 }
 
+// テキストをクリップボードにコピー
+function copyToClipboard() {
+    navigator.clipboard.writeText(transcript)
+        .then(() => {
+            alert("テキストがクリップボードにコピーされました");
+        })
+        .catch((err) => {
+            console.error("クリップボードへのコピーに失敗しました:", err);
+            alert("ERROR：クリップボードへのコピーに失敗しました");
+        });
+}
 
 // ページロード後に実行される処理
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // 音声認識がサポートされているかチェック
     if ('webkitSpeechRecognition' in window) {
         recognition = new SpeechRecognition();
 
         recognition.onresult = function (event) {
-            let transcript = event.results[0][0].transcript;
+            transcript = event.results[0][0].transcript;
             showText.textContent = transcript;
             console.log('Confidence: ' + event.results[0][0].confidence);
         }
@@ -60,7 +73,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // マイクアイコンのクリックイベント定義
-        start_button.addEventListener('click', startButton);
+        startButton.addEventListener('click', startRecognize);
+
+        // コピーボタンのクリックイベント定義
+        copyButton.addEventListener('click', copyToClipboard);
 
     } else {
         // Web Speech APIがサポートされていない場合の処理
