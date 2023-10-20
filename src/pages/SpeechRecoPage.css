@@ -1,0 +1,21 @@
+.container {
+    width: 90%;
+    height: 100%;
+    display: block;
+    position: relative;
+  }
+  .container header {
+    text-align: center;
+  }
+  .container main {
+    height: 80%;
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;
+    max-height: 320px;
+    display: block;
+  }
+  .container footer {
+    text-align: center;
+  }
+  
