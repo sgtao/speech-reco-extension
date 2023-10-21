@@ -6,7 +6,6 @@
 .start-button {
   border-radius: 1em;
   color: gray;
-  font-size: 24pt;
   display: inline-block;
 }
 .start-button :hover {
