@@ -1,5 +1,6 @@
 // SpeechRecoPage.jsx
 import { useState } from 'react';
+import PageMain from '../components/PageMain';
 
 const SpeechRecoPage = () => {
     const [infoState, setInfoState] = useState('initializing...');
@@ -12,7 +13,7 @@ const SpeechRecoPage = () => {
                 </div>
             </header>
             <main>
-                hoge
+                <PageMain setInfoState={setInfoState}/>
             </main>
             <footer>
                 <p>このページはOpenAIのChatGPTを利用しながらコーディングしました。</p>
