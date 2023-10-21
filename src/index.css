@@ -1,0 +1,10 @@
+body {
+  margin: 0 auto;
+  padding: 0;
+  height: 100vh;
+  min-width: 240px;
+  display: flex;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
