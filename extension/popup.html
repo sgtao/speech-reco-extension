@@ -1,53 +1,15 @@
-<!-- popup.html -->
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Speech API Demo</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <script src="popup.js" defer></script>
-</head>
-
-<body>
-    <div class="container">
-        <header>
-            <h3>Speech Recognizer Ext.</h3>
-            <div>
-                マイクアイコンをクリックして話し始めてください
-            </div>
-        </header>
-        <main>
-            <div id="div_start">
-                <button id="start_button" style="display: inline-block;">
-                    <!-- マイクアイコン -->
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="2" width="6" height="14" rx="3" ry="3"></rect>
-                        <line x1="12" y1="18" x2="12" y2="20"></line>
-                        <line x1="5" y1="20" x2="19" y2="20"></line>
-                    </svg>
-                </button>
-            </div>
-            <div id="results">
-                <span class="final" id="final_span"></span>
-                <span class="interim" id="interim_span">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, ...
-                </span>
-            </div>
-            <div id="copy_results">
-                <button tabindex="0" type="button" class="copy_button">
-                    テキストをコピー
-                </button>
-            </div>
-        </main>
-        <footer>
-            <p>このページはOpenAIのChatGPTを利用しながらコーディングしました。</p>
-            <p>info:<span id="info_message"></span></p>
-        </footer>
-    </div>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech Recognizer Extension</title>
+    <script type="module" crossorigin src="/assets/index-f5748ea6.js"></script>
+    <link rel="stylesheet" href="/assets/index-95639737.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+  </body>
 </html>

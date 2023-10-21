@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "updateExtension": "npm run upd:step01 && npm run upd:step02 && npm run upd:step03",
+    "upd:step01": "rm -rf extension/popup.html extension/assets",
+    "upd:step02": "npm run lint && npm run build && npm run handleErrors",
+    "upd:step03": "cp -r dist/* extension/. && mv extension/index.html extension/popup.html",
+    "handleErrors": "if [ $? -ne 0 ]; then echo 'Error occurred. Exiting...' && exit 1; fi"
   },
   "dependencies": {
     "react": "^18.2.0",
