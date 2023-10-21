@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import './PageMain.css';
+import SpeechRecognizer from '../libs/SpeechRecognizer';
 
+// eslint-disable-next-line react/prop-types
 const MicrophoneIcon = ({ strokeColor = 'currentColor' }) => {
     // マイクアイコン
     return (
@@ -13,28 +15,52 @@ const MicrophoneIcon = ({ strokeColor = 'currentColor' }) => {
     )
 }
 
+// eslint-disable-next-line react/prop-types
 const PageMain = ({ setInfoState }) => {
-    const [ transcript, setTranscript ] = useState('Lorem ipsum dolor sit amet,');
-    const [ iconColor, setIconColor ] = useState('currentColor');
+    const [transcript, setTranscript] = useState('Lorem ipsum dolor sit amet,');
+    const [iconColor, setIconColor] = useState('currentColor');
+    const [pollIntervalId, setIntervalId] = useState();
+    useEffect(() => {
+        let resultSetup = SpeechRecognizer.setupRecognize();
+        setInfoState(resultSetup);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const handleToggleRecognize = () => {
+        console.log(`clieck Start Button`);
+        if (SpeechRecognizer.isRecognizing()) {
+            // 音声認識停止（音声認識中の処理）
+            if (pollIntervalId !== undefined) {
+                window.clearInterval(pollIntervalId);
+            }
+            setTranscript(SpeechRecognizer.pullTranscript());
+            SpeechRecognizer.toggleRecognize();
+            setIconColor('gray');
+        } else {
+            // 音声認識開始
+            SpeechRecognizer.toggleRecognize();
+            setIconColor('red');
+            let intervalId = window.setInterval(() => {
+                console.log('polling transcript.');
+                setTranscript(SpeechRecognizer.pullTranscript());
+            }, 500); // 0.5s毎に表示
+            setIntervalId(intervalId);
+        }
+    }
     const handleCopyClick = () => {
         navigator.clipboard.writeText(transcript)
-        .then(() => {
-            setInfoState('テキストがクリップボードにコピーされました');
-        })
-        .catch((err) => {
-            console.error('クリップボードへのコピーに失敗しました:', err);
-            setInfoState('ERROR：クリップボードへのコピーに失敗しました');
-        });
+            .then(() => {
+                setInfoState('テキストがクリップボードにコピーされました');
+            })
+            .catch((err) => {
+                console.error('クリップボードへのコピーに失敗しました:', err);
+                setInfoState('ERROR：クリップボードへのコピーに失敗しました');
+            });
     }
-
-    useEffect(() => {
-
-    }, []);
 
     return (
         <>
             <div className="div-start">
-                <button className="start-button">
+                <button className="start-button" onClick={handleToggleRecognize}>
                     <MicrophoneIcon strokeColor={iconColor} />
                 </button>
             </div>
