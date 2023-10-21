@@ -17,7 +17,7 @@ const SpeechRecoPage = () => {
             </main>
             <footer>
                 <p>このページはOpenAIのChatGPTを利用しながらコーディングしました。</p>
-                <p>info : {infoState}</p>
+                <p>info. : {infoState}</p>
             </footer>
         </div>
     )
