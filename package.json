@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "updateExtension": "npm run upd:step01 && npm run upd:step02 && npm run upd:step03",
     "upd:step01": "rm -rf extension/popup.html extension/assets",
