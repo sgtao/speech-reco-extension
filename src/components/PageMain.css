@@ -6,10 +6,15 @@
 .start-button {
   border-radius: 1em;
   color: gray;
+  background-color: rgb(240, 240, 240);
+  transition:all ease-out .3s;
   display: inline-block;
 }
 .start-button :hover {
   cursor: pointer;
+}
+.start-button.voice-recognizing {
+  background-color: lightgreen;
 }
 .results {
   top: 0;
