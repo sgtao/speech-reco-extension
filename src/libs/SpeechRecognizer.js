@@ -47,19 +47,17 @@ const SpeechRecognizer = (() => {
         }
     }
 
-    const toggleRecognize = () => {
-        console.log(`toggleRecognize at recognizing ${recognizing}`);
-        if (recognizing) {
-            recognition.stop();
-            recognizing = false;
-            return;
-        }
+    const startRecognize = () => {
         recognition.lang = langs[0][1]; // 日本語を設定
         recognition.start();
         recognizing = true;
         lastTranscript = '';
         interimTranscript = '<認識中>';
         console.info(`Ready to receive talk by Language ${recognition.lang}`);
+    }
+    const stopRecognize = () => {
+        recognition.stop();
+        recognizing = false;
     }
 
     const isRecognizing = () => {
@@ -71,7 +69,8 @@ const SpeechRecognizer = (() => {
 
     return {
         setupRecognize,
-        toggleRecognize,
+        startRecognize,
+        stopRecognize,
         isRecognizing,
         pullTranscript,
     }
