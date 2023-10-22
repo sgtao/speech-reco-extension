@@ -35,6 +35,7 @@ const PageMain = ({ setInfoState }) => {
             setTranscript(SpeechRecognizer.pullTranscript());
             SpeechRecognizer.toggleRecognize();
             setIconColor('gray');
+            setInfoState('音声認識停止');
         } else {
             // 音声認識開始
             SpeechRecognizer.toggleRecognize();
@@ -44,6 +45,7 @@ const PageMain = ({ setInfoState }) => {
                 setTranscript(SpeechRecognizer.pullTranscript());
             }, 500); // 0.5s毎に表示
             setIntervalId(intervalId);
+            setInfoState('音声認識開始');
         }
     }
     const handleCopyClick = () => {

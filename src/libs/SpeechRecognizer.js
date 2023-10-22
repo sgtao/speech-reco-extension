@@ -12,15 +12,28 @@ const SpeechRecognizer = (() => {
     let recognition = null;
     let recognizing = false;
     let lastTranscript = '';
+    let interimTranscript = '';
     const setupRecognize = () => {
         // 音声認識がサポートされているかチェック
         if ('webkitSpeechRecognition' in window) {
             recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
 
             recognition.onresult = function (event) {
-                lastTranscript = event.results[0][0].transcript;
-                console.log('Confidence: ' + event.results[0][0].confidence);
-                // console.log('Transcript: ' + lastTranscript);
+                // temporary transcript
+                interimTranscript = '';
+                // console.log('event results:');
+                // console.dir(event.results);
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        lastTranscript += event.results[i][0].transcript;
+                        interimTranscript = ' '; // clear with blank for next transcript
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+                console.log('Confidence: ' + event.results[(event.results.length - 1)][0].confidence);
             }
 
             recognition.onerror = function (event) {
@@ -44,7 +57,8 @@ const SpeechRecognizer = (() => {
         recognition.lang = langs[0][1]; // 日本語を設定
         recognition.start();
         recognizing = true;
-        lastTranscript = '<認識中>';
+        lastTranscript = '';
+        interimTranscript = '<認識中>';
         console.info(`Ready to receive talk by Language ${recognition.lang}`);
     }
 
@@ -52,7 +66,7 @@ const SpeechRecognizer = (() => {
         return recognizing;
     }
     const pullTranscript = () => {
-        return lastTranscript;
+        return lastTranscript + interimTranscript;
     }
 
     return {
