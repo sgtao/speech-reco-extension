@@ -33,17 +33,19 @@ const PageMain = ({ setInfoState }) => {
                 window.clearInterval(pollIntervalId);
             }
             setTranscript(SpeechRecognizer.pullTranscript());
-            SpeechRecognizer.toggleRecognize();
+            SpeechRecognizer.stopRecognize();
             setIconColor('gray');
+            setInfoState('音声認識停止');
         } else {
             // 音声認識開始
-            SpeechRecognizer.toggleRecognize();
+            SpeechRecognizer.startRecognize();
             setIconColor('red');
             let intervalId = window.setInterval(() => {
                 console.log('polling transcript.');
                 setTranscript(SpeechRecognizer.pullTranscript());
             }, 500); // 0.5s毎に表示
             setIntervalId(intervalId);
+            setInfoState('音声認識中');
         }
     }
     const handleCopyClick = () => {
@@ -65,7 +67,6 @@ const PageMain = ({ setInfoState }) => {
                 </button>
             </div>
             <div className="results">
-                <span className="final-span"></span>
                 <span className="interim-span">
                     {transcript}
                 </span>
