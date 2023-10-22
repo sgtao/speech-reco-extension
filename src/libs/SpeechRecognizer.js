@@ -10,7 +10,8 @@ const SpeechRecognizer = (() => {
     /* eslint-enable no-undef */
 
     let recognition = null;
-    let recognizing = false;
+    let recognizing = false; // 
+    let voiceRecognizing = false;
     let lastTranscript = '';
     let interimTranscript = '';
     const setupRecognize = () => {
@@ -23,12 +24,14 @@ const SpeechRecognizer = (() => {
             recognition.onresult = function (event) {
                 // temporary transcript
                 interimTranscript = '';
+                voiceRecognizing = true;
                 // console.log('event results:');
                 // console.dir(event.results);
                 for (var i = event.resultIndex; i < event.results.length; ++i) {
                     if (event.results[i].isFinal) {
                         lastTranscript += event.results[i][0].transcript;
                         interimTranscript = ' '; // clear with blank for next transcript
+                        voiceRecognizing = false;
                     } else {
                         interimTranscript += event.results[i][0].transcript;
                     }
@@ -51,6 +54,7 @@ const SpeechRecognizer = (() => {
         recognition.lang = langs[0][1]; // 日本語を設定
         recognition.start();
         recognizing = true;
+        voiceRecognizing = false;
         lastTranscript = '';
         interimTranscript = '<認識中>';
         console.info(`Ready to receive talk by Language ${recognition.lang}`);
@@ -58,10 +62,14 @@ const SpeechRecognizer = (() => {
     const stopRecognize = () => {
         recognition.stop();
         recognizing = false;
+        voiceRecognizing = false;
     }
 
     const isRecognizing = () => {
         return recognizing;
+    }
+    const isVoiceRecognizing = () => {
+        return voiceRecognizing;
     }
     const pullTranscript = () => {
         return lastTranscript + interimTranscript;
@@ -72,6 +80,7 @@ const SpeechRecognizer = (() => {
         startRecognize,
         stopRecognize,
         isRecognizing,
+        isVoiceRecognizing,
         pullTranscript,
     }
 

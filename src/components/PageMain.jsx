@@ -17,6 +17,7 @@ const MicrophoneIcon = ({ strokeColor = 'currentColor' }) => {
 
 // eslint-disable-next-line react/prop-types
 const PageMain = ({ setInfoState }) => {
+    const [voiceRecognizing, setVoiceRecognizing] = useState(false);
     const [transcript, setTranscript] = useState('Lorem ipsum dolor sit amet,');
     const [iconColor, setIconColor] = useState('currentColor');
     const [pollIntervalId, setIntervalId] = useState();
@@ -31,6 +32,7 @@ const PageMain = ({ setInfoState }) => {
             // 音声認識停止（音声認識中の処理）
             if (pollIntervalId !== undefined) {
                 window.clearInterval(pollIntervalId);
+                setVoiceRecognizing(false);
             }
             setTranscript(SpeechRecognizer.pullTranscript());
             SpeechRecognizer.stopRecognize();
@@ -42,8 +44,9 @@ const PageMain = ({ setInfoState }) => {
             setIconColor('red');
             let intervalId = window.setInterval(() => {
                 console.log('polling transcript.');
+                setVoiceRecognizing(SpeechRecognizer.isVoiceRecognizing());
                 setTranscript(SpeechRecognizer.pullTranscript());
-            }, 500); // 0.5s毎に表示
+            }, 200); // 0.2s毎に表示
             setIntervalId(intervalId);
             setInfoState('音声認識中');
         }
@@ -62,7 +65,8 @@ const PageMain = ({ setInfoState }) => {
     return (
         <>
             <div className="div-start">
-                <button className="start-button" onClick={handleToggleRecognize}>
+                <button onClick={handleToggleRecognize}
+                    className={`start-button ${voiceRecognizing ? 'voice-recognizing' : ''}`}>
                     <MicrophoneIcon strokeColor={iconColor} />
                 </button>
             </div>

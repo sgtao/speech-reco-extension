@@ -16,8 +16,8 @@ const SpeechRecoPage = () => {
                 <PageMain setInfoState={setInfoState}/>
             </main>
             <footer>
-                <p>このページはOpenAIのChatGPTを利用しながらコーディングしました。</p>
                 <p>info. : {infoState}</p>
+                <p>本ページを作成する際、ChatGPTを利用しました。</p>
             </footer>
         </div>
     )
