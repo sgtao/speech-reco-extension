@@ -15,9 +15,14 @@
   top: 0;
   height: 80%;
   min-height: 240px;
+  max-width: 360px;
   border: 1px solid;
   border-radius: 1em;
 }
+.results .interim-span {
+  width: 100%;
+}
+
 .copy-results {
   margin: 0.5em;
   display: flex;
