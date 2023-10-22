@@ -21,6 +21,7 @@
   height: 80%;
   min-height: 240px;
   max-width: 360px;
+  min-width: 360px;
   border: 1px solid;
   border-radius: 1em;
 }
