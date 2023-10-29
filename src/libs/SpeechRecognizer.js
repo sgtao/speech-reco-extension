@@ -1,8 +1,5 @@
 // SpeechRecognizer.js
 const SpeechRecognizer = (() => {
-    // If you modify this array, also update default language / dialect below.
-    let langs = [['日本語', ['ja-JP']]];
-
     /* eslint-disable no-undef */
     let SpeechRecognition = webkitSpeechRecognition;
     // let SpeechGrammarList = window.webkitSpeechGrammarList;
@@ -50,8 +47,9 @@ const SpeechRecognizer = (() => {
         }
     }
 
-    const startRecognize = () => {
-        recognition.lang = langs[0][1]; // 日本語を設定
+    const startRecognize = (recoLang = 'ja-JP') => {
+        // recoLang は `SelectLangMenu`で設定
+        recognition.lang = recoLang; // 選択言語を設定
         recognition.start();
         recognizing = true;
         voiceRecognizing = false;
