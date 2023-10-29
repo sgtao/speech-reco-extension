@@ -33,7 +33,7 @@ const PageMain = ({ setInfoState, selectLang = 'ja-JP' }) => {
             setInfoState(`認識言語が変更されました（${recoLang} to ${selectLang}）`);
             setRecoLang(selectLang);
         }
-    }, [selectLang]);
+    }, [selectLang, recoLang]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // 音声認識開始
     const startRecognize = () => {

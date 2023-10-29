@@ -2,6 +2,7 @@
 import { Menu, MenuHeader, MenuItem, MenuButton, SubMenu } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
+import './SelectLangMenu.css';
 
 // eslint-disable-next-line react/prop-types
 const SelectLangMenu = ({ selectLang, setSelectLang }) => {
@@ -15,7 +16,7 @@ const SelectLangMenu = ({ selectLang, setSelectLang }) => {
     setSelectLang(e.value);
   }
   return (
-    <Menu menuButton={<MenuButton>{selectLang}</MenuButton>}>
+    <Menu menuButton={<MenuButton className="menu-button">{selectLang}</MenuButton>}>
       <MenuHeader>Select Lang.</MenuHeader>
       <MenuItem value="ja-JP" onClick={(e) => clickItemHandler(e)}>日本語</MenuItem>
       <SubMenu label="English">

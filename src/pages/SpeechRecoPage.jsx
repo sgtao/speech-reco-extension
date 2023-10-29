@@ -1,7 +1,6 @@
 // SpeechRecoPage.jsx
 import { useState } from 'react';
-import PageMain from '../components/PageMain';
-import SelectLangMenu from '../components/SelectLangMenu.jsx';
+import { PageMain, SelectLangMenu } from '../components/index';
 
 const SpeechRecoPage = () => {
     const [infoState, setInfoState] = useState('initializing...');
