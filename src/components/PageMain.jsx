@@ -16,39 +16,55 @@ const MicrophoneIcon = ({ strokeColor = 'currentColor' }) => {
 }
 
 // eslint-disable-next-line react/prop-types
-const PageMain = ({ setInfoState }) => {
+const PageMain = ({ setInfoState, selectLang = 'ja-JP' }) => {
     const [voiceRecognizing, setVoiceRecognizing] = useState(false);
     const [transcript, setTranscript] = useState('Lorem ipsum dolor sit amet,');
     const [iconColor, setIconColor] = useState('currentColor');
     const [pollIntervalId, setIntervalId] = useState();
+    const [recoLang, setRecoLang] = useState('ja-JP');
+
     useEffect(() => {
         let resultSetup = SpeechRecognizer.setupRecognize();
         setInfoState(resultSetup);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        if (recoLang !== selectLang) {
+            stopRecognize();
+            setInfoState(`認識言語が変更されました（${recoLang} to ${selectLang}）`);
+            setRecoLang(selectLang);
+        }
+    }, [selectLang, recoLang]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // 音声認識開始
+    const startRecognize = () => {
+        SpeechRecognizer.startRecognize(recoLang);
+        setIconColor('red');
+        let intervalId = window.setInterval(() => {
+            console.log('polling transcript.');
+            setVoiceRecognizing(SpeechRecognizer.isVoiceRecognizing());
+            setTranscript(SpeechRecognizer.pullTranscript());
+        }, 200); // 0.2s毎に表示
+        setIntervalId(intervalId);
+        setInfoState('音声認識中');
+    }
+    // 音声認識停止（音声認識中の処理）
+    const stopRecognize = () => {
+        if (pollIntervalId !== undefined) {
+            window.clearInterval(pollIntervalId);
+            setVoiceRecognizing(false);
+        }
+        setTranscript(SpeechRecognizer.pullTranscript());
+        SpeechRecognizer.stopRecognize();
+        setIconColor('gray');
+        setInfoState('音声認識停止');
+    }
 
     const handleToggleRecognize = () => {
         console.log(`clieck Start Button`);
         if (SpeechRecognizer.isRecognizing()) {
-            // 音声認識停止（音声認識中の処理）
-            if (pollIntervalId !== undefined) {
-                window.clearInterval(pollIntervalId);
-                setVoiceRecognizing(false);
-            }
-            setTranscript(SpeechRecognizer.pullTranscript());
-            SpeechRecognizer.stopRecognize();
-            setIconColor('gray');
-            setInfoState('音声認識停止');
+            stopRecognize();
         } else {
-            // 音声認識開始
-            SpeechRecognizer.startRecognize();
-            setIconColor('red');
-            let intervalId = window.setInterval(() => {
-                console.log('polling transcript.');
-                setVoiceRecognizing(SpeechRecognizer.isVoiceRecognizing());
-                setTranscript(SpeechRecognizer.pullTranscript());
-            }, 200); // 0.2s毎に表示
-            setIntervalId(intervalId);
-            setInfoState('音声認識中');
+            startRecognize();
         }
     }
     const handleCopyClick = () => {

@@ -1,0 +1,26 @@
+/* スタイリングのカスタマイズ例 */
+/* MenuButtonをカスタマイズ */
+.menu-button {
+  padding: 8px 16px; /* ボタンのパディングを調整 */
+  background-color: rgb(249, 249, 249); /* バックグラウンドカラーを指定 */
+  color: black; /* テキストカラーを指定 */
+  border: 1px black solid; /* ボーダーを削除 */
+  border-radius: 4px; /* 角丸を適用 */
+  cursor: pointer; /* カーソルをポインタに変更 */
+  transition: background-color 0.3s; /* ホバー時のアニメーションを追加 */
+  font-family: Inter, system-ui, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-weight: 500;
+
+  /* ホバー時のスタイリング */
+  &:hover {
+    border-color: #646cff; /* ホバー時のボーダーカラーを指定 */
+  }
+  /* メニューオープン時のスタイリング */
+  &.szh-menu-button--open {
+    border-width: 2px;
+    font-weight: 700;
+  }
+}
